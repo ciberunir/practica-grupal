@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phishing con WiFi Pineapple - Documentación</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <h1>WiFi Pineapple Phishing</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#conceptos">Conceptos Básicos</a></li>
+                <li><a href="#poc">Prueba de Concepto</a></li>
+                <li><a href="#variaciones">Variaciones</a></li>
+                <li><a href="#proteccion">Protección</a></li>
+                <li><a href="#bibliografia">Bibliografía</a></li>
+                <li><a href="#autores">Autores</a></li>
+            </ul>
+            <div class="burger">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="hero">
+            <div class="hero-content">
+                <h2>Documentación de Ataque de Phishing</h2>
+                <p>Utilizando WiFi Pineapple con Portal Cautivo</p>
+                <a href="#conceptos" class="cta-button">Comenzar</a>
+            </div>
+        </section>
+
+        <!-- Conceptos Básicos -->
+        <section id="conceptos" class="content-section">
+            <div class="container">
+                <h2>Conceptos Básicos</h2>
+                
+                <div class="concept-card">
+                    <h3>¿Qué es el Phishing?</h3>
+                    <p>El phishing es una técnica de ingeniería social utilizada por atacantes para engañar a las víctimas y obtener información confidencial como credenciales de acceso, datos bancarios o información personal. Los atacantes se hacen pasar por entidades legítimas para ganar la confianza de sus víctimas.</p>
+                </div>
+
+                <div class="concept-card">
+                    <h3>¿Qué es WiFi Pineapple?</h3>
+                    <p>WiFi Pineapple es un dispositivo de auditoría de redes inalámbricas desarrollado por Hak5. Está diseñado para realizar pruebas de penetración en redes WiFi y puede ser utilizado para:</p>
+                    <ul>
+                        <li>Crear puntos de acceso falsos (Evil Twin)</li>
+                        <li>Interceptar tráfico de red</li>
+                        <li>Realizar ataques Man-in-the-Middle (MitM)</li>
+                        <li>Implementar portales cautivos maliciosos</li>
+                    </ul>
+                </div>
+
+                <div class="concept-card">
+                    <h3>¿Qué es un Portal Cautivo?</h3>
+                    <p>Un portal cautivo es una página web que se muestra a los usuarios cuando intentan acceder a Internet a través de una red WiFi pública. Normalmente se utiliza en hoteles, aeropuertos y cafeterías para:</p>
+                    <ul>
+                        <li>Autenticar usuarios</li>
+                        <li>Mostrar términos y condiciones</li>
+                        <li>Recopilar información del usuario</li>
+                    </ul>
+                    <p>En un ataque de phishing, este portal se utiliza para simular páginas de login legítimas y capturar credenciales.</p>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Evil Twin Attack</h3>
+                    <p>El ataque Evil Twin consiste en crear un punto de acceso WiFi falso que imita a uno legítimo. Cuando las víctimas se conectan a este punto de acceso malicioso, todo su tráfico pasa por el dispositivo del atacante, permitiendo:</p>
+                    <ul>
+                        <li>Capturar credenciales</li>
+                        <li>Interceptar comunicaciones</li>
+                        <li>Inyectar contenido malicioso</li>
+                        <li>Redirigir a portales cautivos falsos</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Prueba de Concepto -->
+        <section id="poc" class="content-section alt-bg">
+            <div class="container">
+                <h2>Prueba de Concepto</h2>
+                
+                <div class="poc-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Configuración del WiFi Pineapple</h3>
+                        <p>El primer paso es configurar el dispositivo WiFi Pineapple. Esto incluye:</p>
+                        <ul>
+                            <li>Conectar el dispositivo a una fuente de alimentación</li>
+                            <li>Acceder a la interfaz de administración (normalmente en 172.16.42.1:1471)</li>
+                            <li>Configurar las credenciales de acceso</li>
+                            <li>Actualizar el firmware si es necesario</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="poc-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Creación del Punto de Acceso Falso</h3>
+                        <p>Configurar un punto de acceso que imite una red WiFi legítima:</p>
+                        <ul>
+                            <li>Seleccionar un SSID común (ej: "WiFi_Gratis", "Starbucks_WiFi")</li>
+                            <li>Configurar el canal de transmisión</li>
+                            <li>Deshabilitar la autenticación para facilitar las conexiones</li>
+                            <li>Activar el módulo de Evil Portal</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="poc-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Diseño del Portal Cautivo</h3>
+                        <p>Crear una página de login que simule un servicio legítimo:</p>
+                        <ul>
+                            <li>Diseñar una interfaz idéntica al servicio objetivo (ej: Gmail, Facebook)</li>
+                            <li>Incluir logos y estilos oficiales</li>
+                            <li>Crear formularios de captura de credenciales</li>
+                            <li>Configurar la redirección después del "login"</li>
+                        </ul>
+                        <div class="code-block">
+                            <pre><code>&lt;form action="capture.php" method="POST"&gt;
+    &lt;input type="email" name="email" placeholder="Correo electrónico"&gt;
+    &lt;input type="password" name="password" placeholder="Contraseña"&gt;
+    &lt;button type="submit"&gt;Iniciar sesión&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="poc-step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Captura de Credenciales</h3>
+                        <p>Configurar el script de captura para almacenar las credenciales:</p>
+                        <ul>
+                            <li>Crear un script PHP o Python para procesar los datos</li>
+                            <li>Almacenar las credenciales en un archivo de log</li>
+                            <li>Redirigir al usuario a la página real del servicio</li>
+                        </ul>
+                        <div class="code-block">
+                            <pre><code>&lt;?php
+// Ejemplo de captura (solo para fines educativos)
+$log = fopen("credentials.txt", "a");
+fwrite($log, "Email: " . $_POST['email'] . "\n");
+fwrite($log, "Password: " . $_POST['password'] . "\n");
+fwrite($log, "IP: " . $_SERVER['REMOTE_ADDR'] . "\n");
+fwrite($log, "---\n");
+fclose($log);
+header("Location: https://www.google.com");
+?&gt;</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="poc-step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h3>Ejecución del Ataque</h3>
+                        <p>Proceso de ejecución del ataque:</p>
+                        <ul>
+                            <li>Posicionar el dispositivo en un lugar con alta afluencia</li>
+                            <li>Activar el punto de acceso y el portal cautivo</li>
+                            <li>Esperar a que las víctimas se conecten</li>
+                            <li>Monitorizar las conexiones y credenciales capturadas</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <h4>⚠️ Advertencia Legal</h4>
+                    <p>Este contenido es exclusivamente educativo. Realizar ataques de phishing sin autorización es ilegal y puede conllevar graves consecuencias legales. Solo debe utilizarse en entornos controlados con autorización expresa.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Variaciones -->
+        <section id="variaciones" class="content-section">
+            <div class="container">
+                <h2>Variaciones del Ataque</h2>
+
+                <div class="variation-card">
+                    <h3>1. Ataque con Deautenticación</h3>
+                    <p>Esta variación combina el Evil Twin con ataques de deautenticación para forzar a los usuarios a desconectarse de la red legítima:</p>
+                    <ul>
+                        <li>Se envían paquetes de deautenticación a la red objetivo</li>
+                        <li>Los dispositivos se desconectan automáticamente</li>
+                        <li>Al reconectarse, encuentran el punto de acceso falso con mejor señal</li>
+                        <li>Mayor probabilidad de que se conecten al Evil Twin</li>
+                    </ul>
+                </div>
+
+                <div class="variation-card">
+                    <h3>2. Karma Attack</h3>
+                    <p>El ataque Karma aprovecha el comportamiento de los dispositivos WiFi:</p>
+                    <ul>
+                        <li>Los dispositivos envían "probe requests" buscando redes conocidas</li>
+                        <li>WiFi Pineapple responde a todas estas solicitudes</li>
+                        <li>El dispositivo se conecta automáticamente creyendo que es una red conocida</li>
+                        <li>Funciona especialmente bien con dispositivos que tienen redes guardadas</li>
+                    </ul>
+                </div>
+
+                <div class="variation-card">
+                    <h3>3. Portal Cautivo con Captcha</h3>
+                    <p>Añadir elementos de verificación para dar mayor credibilidad:</p>
+                    <ul>
+                        <li>Incluir captchas de Google u otras verificaciones</li>
+                        <li>Simular verificación en dos pasos</li>
+                        <li>Añadir mensajes de "verificación de seguridad"</li>
+                        <li>Mayor apariencia de legitimidad</li>
+                    </ul>
+                </div>
+
+                <div class="variation-card">
+                    <h3>4. Ataque Dirigido a Empresas</h3>
+                    <p>Personalizar el ataque para organizaciones específicas:</p>
+                    <ul>
+                        <li>Investigar los sistemas de autenticación de la empresa</li>
+                        <li>Clonar portales internos de la organización</li>
+                        <li>Usar SSIDs que imiten las redes corporativas</li>
+                        <li>Capturar credenciales de acceso empresariales</li>
+                    </ul>
+                </div>
+
+                <div class="variation-card">
+                    <h3>5. Combinación con SSL Strip</h3>
+                    <p>Degradar conexiones HTTPS a HTTP para interceptar datos:</p>
+                    <ul>
+                        <li>Configurar un proxy transparente</li>
+                        <li>Interceptar solicitudes HTTPS</li>
+                        <li>Servir versiones HTTP de las páginas</li>
+                        <li>Capturar credenciales en texto plano</li>
+                    </ul>
+                </div>
+
+                <div class="variation-card">
+                    <h3>6. Inyección de JavaScript</h3>
+                    <p>Inyectar código malicioso en páginas web legítimas:</p>
+                    <ul>
+                        <li>Interceptar tráfico HTTP</li>
+                        <li>Inyectar scripts de keylogger</li>
+                        <li>Capturar todas las pulsaciones de teclado</li>
+                        <li>Enviar datos a servidor controlado por el atacante</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Protección -->
+        <section id="proteccion" class="content-section alt-bg">
+            <div class="container">
+                <h2>Cómo Protegerse</h2>
+
+                <div class="protection-grid">
+                    <div class="protection-card">
+                        <div class="protection-icon">🔐</div>
+                        <h3>Usar VPN</h3>
+                        <p>Utilizar una VPN (Red Privada Virtual) cifra todo el tráfico de red, impidiendo que un atacante pueda leer la información interceptada.</p>
+                    </div>
+
+                    <div class="protection-card">
+                        <div class="protection-icon">🔒</div>
+                        <h3>Verificar HTTPS</h3>
+                        <p>Siempre verificar que las páginas de login utilicen HTTPS y que el certificado sea válido. Buscar el candado en la barra de direcciones.</p>
+                    </div>
+
+                    <div class="protection-card">
+                        <div class="protection-icon">📱</div>
+                        <h3>Desactivar WiFi Automático</h3>
+                        <p>Desactivar la conexión automática a redes WiFi. Conectarse manualmente solo a redes conocidas y de confianza.</p>
+                    </div>
+
+                    <div class="protection-card">
+                        <div class="protection-icon">🔑</div>
+                        <h3>Autenticación de Dos Factores</h3>
+                        <p>Activar 2FA en todas las cuentas. Incluso si capturan las credenciales, necesitarán el segundo factor para acceder.</p>
+                    </div>
+
+                    <div class="protection-card">
+                        <div class="protection-icon">⚠️</div>
+                        <h3>Desconfiar de Redes Públicas</h3>
+                        <p>Evitar introducir credenciales sensibles en redes WiFi públicas. Usar datos móviles para operaciones críticas.</p>
+                    </div>
+
+                    <div class="protection-card">
+                        <div class="protection-icon">🗑️</div>
+                        <h3>Eliminar Redes Guardadas</h3>
+                        <p>Eliminar regularmente las redes WiFi guardadas en el dispositivo para evitar conexiones automáticas no deseadas.</p>
+                    </div>
+
+                    <div class="protection-card">
+                        <div class="protection-icon">🔄</div>
+                        <h3>Mantener Software Actualizado</h3>
+                        <p>Mantener el sistema operativo y aplicaciones actualizadas para beneficiarse de las últimas correcciones de seguridad.</p>
+                    </div>
+
+                    <div class="protection-card">
+                        <div class="protection-icon">🛡️</div>
+                        <h3>Usar Gestores de Contraseñas</h3>
+                        <p>Los gestores de contraseñas no autocompletarán credenciales en sitios de phishing ya que verifican el dominio exacto.</p>
+                    </div>
+                </div>
+
+                <div class="tips-box">
+                    <h3>Señales de Alerta</h3>
+                    <ul>
+                        <li>Redes WiFi sin contraseña en lugares públicos</li>
+                        <li>Portales de login que aparecen inesperadamente</li>
+                        <li>URLs sospechosas o sin HTTPS</li>
+                        <li>Certificados de seguridad inválidos</li>
+                        <li>Solicitudes de información excesiva</li>
+                        <li>Errores ortográficos o de diseño en páginas de login</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bibliografía -->
+        <section id="bibliografia" class="content-section">
+            <div class="container">
+                <h2>Bibliografía y Referencias</h2>
+
+                <div class="biblio-category">
+                    <h3>Recursos Oficiales</h3>
+                    <ul class="biblio-list">
+                        <li>
+                            <a href="https://www.hak5.org/gear/wifi-pineapple" target="_blank">Hak5 - WiFi Pineapple Official</a>
+                            <p>Documentación oficial del dispositivo WiFi Pineapple</p>
+                        </li>
+                        <li>
+                            <a href="https://docs.hak5.org/wifi-pineapple/" target="_blank">WiFi Pineapple Documentation</a>
+                            <p>Guías de uso y configuración del dispositivo</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="biblio-category">
+                    <h3>Artículos Académicos</h3>
+                    <ul class="biblio-list">
+                        <li>
+                            <a href="https://www.sciencedirect.com/science/article/pii/S1877050915024254" target="_blank">Phishing attacks: A comprehensive study</a>
+                            <p>Estudio comprehensivo sobre técnicas de phishing</p>
+                        </li>
+                        <li>
+                            <a href="https://ieeexplore.ieee.org/abstract/document/8226838" target="_blank">Evil Twin Attack Detection in IEEE 802.11</a>
+                            <p>Análisis de detección de ataques Evil Twin</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="biblio-category">
+                    <h3>Herramientas de Seguridad</h3>
+                    <ul class="biblio-list">
+                        <li>
+                            <a href="https://www.wireshark.org/" target="_blank">Wireshark</a>
+                            <p>Analizador de protocolos de red</p>
+                        </li>
+                        <li>
+                            <a href="https://www.aircrack-ng.org/" target="_blank">Aircrack-ng</a>
+                            <p>Suite de herramientas para auditoría WiFi</p>
+                        </li>
+                        <li>
+                            <a href="https://github.com/wifiphisher/wifiphisher" target="_blank">Wifiphisher</a>
+                            <p>Framework de ataque WiFi de código abierto</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="biblio-category">
+                    <h3>Recursos Educativos</h3>
+                    <ul class="biblio-list">
+                        <li>
+                            <a href="https://www.sans.org/white-papers/" target="_blank">SANS White Papers</a>
+                            <p>Documentos técnicos sobre seguridad informática</p>
+                        </li>
+                        <li>
+                            <a href="https://www.incibe.es/" target="_blank">INCIBE</a>
+                            <p>Instituto Nacional de Ciberseguridad de España</p>
+                        </li>
+                        <li>
+                            <a href="https://owasp.org/" target="_blank">OWASP</a>
+                            <p>Open Web Application Security Project</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="biblio-category">
+                    <h3>Legislación</h3>
+                    <ul class="biblio-list">
+                        <li>
+                            <a href="https://www.boe.es/buscar/act.php?id=BOE-A-1995-25444" target="_blank">Código Penal Español - Delitos Informáticos</a>
+                            <p>Artículos 197-201 sobre delitos contra la intimidad</p>
+                        </li>
+                        <li>
+                            <a href="https://www.boe.es/buscar/doc.php?id=DOUE-L-2016-80807" target="_blank">Reglamento General de Protección de Datos (RGPD)</a>
+                            <p>Normativa europea sobre protección de datos</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Autores -->
+        <section id="autores" class="content-section alt-bg">
+            <div class="container">
+                <h2>Autores del Proyecto</h2>
+                <p class="section-intro">Este proyecto ha sido desarrollado como parte de la asignatura de Seguridad de Sistemas de la Información.</p>
+
+                <div class="authors-grid">
+                    <div class="author-card">
+                        <div class="author-avatar">👨‍💻</div>
+                        <h3>Miembro del Equipo 1</h3>
+                        <p class="author-role">Investigación y Documentación</p>
+                        <p class="author-bio">Encargado de la investigación de conceptos básicos y documentación del ataque.</p>
+                    </div>
+
+                    <div class="author-card">
+                        <div class="author-avatar">👩‍💻</div>
+                        <h3>Miembro del Equipo 2</h3>
+                        <p class="author-role">Desarrollo de la Prueba de Concepto</p>
+                        <p class="author-bio">Responsable de la implementación y pruebas del portal cautivo.</p>
+                    </div>
+
+                    <div class="author-card">
+                        <div class="author-avatar">👨‍🔬</div>
+                        <h3>Miembro del Equipo 3</h3>
+                        <p class="author-role">Análisis de Variaciones</p>
+                        <p class="author-bio">Investigación de diferentes variaciones y técnicas avanzadas del ataque.</p>
+                    </div>
+
+                    <div class="author-card">
+                        <div class="author-avatar">👩‍🔬</div>
+                        <h3>Miembro del Equipo 4</h3>
+                        <p class="author-role">Medidas de Protección</p>
+                        <p class="author-bio">Documentación de medidas preventivas y buenas prácticas de seguridad.</p>
+                    </div>
+                </div>
+
+                <div class="project-info">
+                    <h3>Información del Proyecto</h3>
+                    <ul>
+                        <li><strong>Asignatura:</strong> Seguridad de Sistemas de la Información</li>
+                        <li><strong>Universidad:</strong> UNIR - Universidad Internacional de La Rioja</li>
+                        <li><strong>Año Académico:</strong> 2024-2025</li>
+                        <li><strong>Tipo:</strong> Práctica Grupal</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 - Proyecto Educativo sobre Seguridad WiFi</p>
+            <p>Este contenido es exclusivamente educativo y no debe utilizarse con fines maliciosos.</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
