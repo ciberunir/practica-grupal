@@ -37,7 +37,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Add scroll effect to header
-    let lastScroll = 0;
     const header = document.querySelector('header');
 
     window.addEventListener('scroll', function() {
@@ -48,8 +47,6 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.3)';
         }
-        
-        lastScroll = currentScroll;
     });
 
     // Animate elements on scroll
@@ -93,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.querySelectorAll('.nav-links a').forEach(link => {
                     link.style.color = '#fff';
                 });
-                const activeLink = document.querySelector('.nav-links a[href="#' + sectionId + '"]');
+                const activeLink = document.querySelector(`.nav-links a[href="#${sectionId}"]`);
                 if (activeLink) {
                     activeLink.style.color = '#e94560';
                 }

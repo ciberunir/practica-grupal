@@ -598,24 +598,3 @@ footer p:last-child {
 .burger.active .line3 {
     transform: rotate(45deg) translate(-5px, -6px);
 }
-
-/* Smooth Scrolling Animation */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.concept-card,
-.poc-step,
-.variation-card,
-.protection-card,
-.biblio-list li,
-.author-card {
-    animation: fadeInUp 0.6s ease forwards;
-}
