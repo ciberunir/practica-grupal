@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phishing con wiFi pineapple - documentación</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <h1>Phishing en redes WiFi</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#conceptos">Conceptos básicos</a></li>
+                <li><a href="#poc">Prueba de concepto</a></li>
+                <li><a href="#variaciones">Variaciones</a></li>
+                <li><a href="#proteccion">Protección</a></li>
+                <li><a href="#enlaces">Enlaces de interés</a></li>
+                <li><a href="#autores">Autores</a></li>
+            </ul>
+            <div class="burger">
+              <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="hero">
+            <div class="hero-content">
+                <h2>Ataque de phishing en redes inalámbricas</h2>
+                <p>Utilizando WiFi Pineapple con portal cautivo</p>
+                <a href="#conceptos" class="cta-button">Comenzar</a>
+            </div>
+        </section>
+
+        <!-- Conceptos Básicos -->
+        <section id="conceptos" class="content-section">
+            <div class="container">
+                <h2>Conceptos básicos</h2>
+                
+                <div class="concept-card">
+                    <h3>¿Qué es el <strong><i>phishing</i></strong>?</h3>
+                    <p>El <strong><i>phishing</i></strong> es una técnica de ingeniería social utilizada por atacantes para engañar a las víctimas y obtener información confidencial como credenciales de acceso, datos bancarios o información personal. Los atacantes se hacen pasar por entidades legítimas para ganar la confianza de sus víctimas.</p>
+                    <p>Existen diferentes variantes de <strong><i>phishing</i></strong>:</p>
+                    <ul>
+                        <li><strong>Correo electrónico falso:</strong> mensajes que imitan a bancos, servicios de pago o plataformas conocidas.</li>
+                        <li><strong><i>Smishing</i>:</strong> <strong><i>phishing</i></strong> a través de SMS con enlaces maliciosos.</li>
+                        <li><strong><i>Vishing</i>:</strong> llamadas telefónicas en las que el atacante suplanta a una entidad legítima.</li>
+                        <li><strong><i>Pharming</i>:</strong> manipulación de DNS para redirigir a sitios fraudulentos.</li>
+                    </ul>
+                    <p>Las consecuencias incluyen <strong>robo de credenciales</strong>, <strong>fraudes financieros</strong> y <strong>suplantación de identidad</strong>. Para prevenirlo se recomienda verificar siempre las URLs, evitar abrir enlaces sospechosos, usar <strong>autenticación multifactor (MFA)</strong> y mantener actualizado el software de seguridad. En la sección <a href="#proteccion"><strong>Cómo protegerse</strong></a> &nbsp;se explica con más detalle.&nbsp;&nbsp;</p>
+                </div>
+
+                <div class="concept-card">
+                    <h3>¿Qué es <strong>WiFi Pineapple</strong>?</h3>
+                    <p><strong>WiFi Pineapple</strong> es un dispositivo de auditoría de redes inalámbricas desarrollado por Hak5. Aunque su uso legítimo es para pruebas de penetración y formación en ciberseguridad, también puede ser explotado por atacantes.</p>
+                    <p>Sus principales funciones incluyen:</p>
+                    <ul>
+                        <li><strong>Crear puntos de acceso falsos</strong> (<em>Evil Twin</em>).</li>
+                        <li><strong>Interceptar y analizar tráfico de red</strong>.</li>
+                        <li><strong>Realizar ataques</strong> <em>Man-in-the-Middle</em> (MitM).</li>
+                        <li><strong>Implementar portales cautivos maliciosos</strong>.</li>
+                    </ul>
+                    <p>En auditorías éticas, permite a profesionales de seguridad identificar vulnerabilidades y entrenar a usuarios en buenas prácticas. Sin embargo, en manos maliciosas puede convertirse en una herramienta peligrosa para el <strong>robo de datos</strong>.</p>
+                </div>
+
+                <div class="concept-card">
+                    <h3>¿Qué es un <strong>portal cautivo</strong>?</h3>
+                    <p>Un <strong>portal cautivo</strong> es una página web que se muestra a los usuarios cuando intentan acceder a Internet a través de una red WiFi pública. Es común en hoteles, aeropuertos y cafeterías.</p>
+                    <p><strong>Usos legítimos:</strong></p>
+                    <ul>
+                        <li><strong>Autenticar usuarios</strong> mediante credenciales o códigos de acceso.</li>
+                        <li><strong>Mostrar términos y condiciones</strong> de uso.</li>
+                        <li><strong>Recopilar información básica del usuario</strong> (correo, nombre).</li>
+                    </ul>
+                    <p>En un ataque de <strong><i>phishing</i></strong>, este portal puede ser manipulado para simular páginas de login legítimas y capturar credenciales. Además, puede redirigir a sitios fraudulentos o incluso forzar la descarga de <strong><i>malware</i></strong>.</p>
+                </div>
+
+                <div class="concept-card">
+                    <h3>Ataque <strong>Evil twin</strong></h3>
+                    <p>El ataque <strong>Evil twin</strong> consiste en crear un punto de acceso WiFi falso que imita a uno legítimo. Cuando las víctimas se conectan a este punto de acceso malicioso, todo su tráfico pasa por el dispositivo del atacante.</p>
+                    <p>Esto permite:</p>
+                    <ul>
+                        <li><strong>Capturar credenciales</strong> de correo, redes sociales y banca online.</li>
+                        <li><strong>Interceptar comunicaciones privadas</strong>.</li>
+                        <li><strong>Inyectar contenido malicioso</strong> en las páginas visitadas.</li>
+                        <li><strong>Redirigir a portales cautivos falsos</strong> para <strong><i>phishing</i></strong>.</li>
+                    </ul>
+                    <p><strong>Medidas de protección:</strong></p>
+                    <ul>
+                        <li><strong>Evitar conectarse</strong> a redes WiFi abiertas sin cifrado.</li>
+                        <li><strong>Usar una VPN</strong> para proteger el tráfico.</li>
+                        <li><strong>Desactivar la conexión automática</strong> a redes conocidas.</li>
+                        <li><strong>Verificar manualmente</strong> el nombre de la red y su certificado de seguridad.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Prueba de Concepto -->
+        <section id="poc" class="content-section alt-bg">
+            <div class="container">
+                <h2>Prueba de concepto</h2>
+                <div class="warning-box">
+                    <h4>⚠️ Advertencia legal</h4>
+                    <p>Este contenido es exclusivamente educativo. Realizar ataques de phishing sin autorización es ilegal y puede conllevar graves consecuencias legales. Solo debe utilizarse en entornos controlados con autorización expresa.</p>
+                </div>
+				<br/>
+				<div class="poc-step">
+                    <div class="step-content">
+                        <h3>El escenario</h3>
+                        <p>En esta prueba de concepto (PoC) se va a mostrar de forma muy resumida cómo un atacante puede sustraer las credenciales de un usuario implantando una red WiFi maliciosa.</p>
+						<p>Para evitar utilizar marcas e involucrar a terceros, se plantea un escenario de un hipotético edificio universitario que presta servicio WiFi a todos sus docentes y alumnado. Para asegurarse de ello, la red requerirá a los usuarios introducir su dirección de correo electrónico educativo y la contraseña asociada.</p>
+						<p>En un entorno real, el atacante puede utilizar lugares públicos donde se ofrezcan redes WiFi abiertas y gratuitas, para las que "solo" sea necesario gestionar un alta de usuario, pudiendo comprometer sus datos personales y cuentas personales y/o profesionales.</p>
+						<p>Tanto el entorno como los datos proporcionados en esta PoC no son reales. Cualquier parecido, es pura coincidencia.</p>
+                    </div>
+                </div>
+					<div class="poc-step">
+                    <div class="step-content">
+                        <h3>Material empleado</h3>
+                        <p>Para llevar a cabo esta prueba de concepto se necesita el siguiente material:</p>
+						<ul>
+						  <li>Dispositivo <a href="https://hak5.org/collections/home1/products/wifi-pineapple#top" target="_blank">WiFi Pineapple</a> (llamado coloquialmente "piña").</li>
+							<li>Ordenador para la configuración (no requiere ninguna prestación específica).</li>
+							<li>Conexión a Internet.</li>
+							<li>Ordenador o dispositivo móvil (portátil, tablet, móvil) para actuar como víctima, siempre que tenga conectividad WiFi.</li>
+						</ul>
+						<p>WiFi Pineapple es un dispositvo no apto para todos los bolsillos. Existen routers en el mercado (como los <a href="https://store-eu.gl-inet.com/collections/mini-smart-routers" target="_blank">mini routers de GL-iNet</a>) que montan un hardware muy similar al que tiene WiFi Pineapple, por lo que se puede cargar el firmware oficial que Hak5, fabricante de WiFi Pineapple ofrece de forma abierta en su <a href="https://downloads.hak5.org/pineapple" target="_blank">portal de descargas</a>. Hay muchísima documentación en Internet sobre el proyecto de convertir uno de esos routers en una piña. En la sección de Bibliografía se dejan algunos enlaces de interés por si se opta por esta solución, que no forma parte de la PoC.</p>
+                    </div>
+                </div>
+				<!-- Vídeo PoC -->
+                <div class="poc-video">
+                    <button class="video-thumbnail" 
+                            type="button" 
+                            data-video-id="tICvDUX_ysA"
+                            aria-label="Reproducir vídeo de la prueba de concepto">
+                        <img src="https://img.youtube.com/vi/tICvDUX_ysA/hqdefault.jpg" 
+                             alt="PHISHING EN REDES INALÁMBRICAS - WIFI PINEAPPLE CON EVIL PORTAL">
+                        <span class="play-icon" aria-hidden="true">▶</span>
+                    </button>
+                </div>
+
+                <!-- Paso 1 -->
+                <div class="poc-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Configuración del WiFi Pineapple</h3>
+                        <p>El primer paso es configurar el dispositivo WiFi Pineapple. Esto incluye:</p>
+                        <ul>
+                          <li>Conectar el dispositivo al equipo a través de un cable USB-C.</li>
+                            <li>Acceder a la interfaz de administración (normalmente en 172.16.42.1:1471).</li>
+                            <li>Configurar las credenciales de acceso.</li>
+                            <li>Actualizar el firmware si es necesario.</li>
+							<li>Instalar el módulo 'Evil Portal' para desplegar el portal cautivo.</li>
+                      </ul>
+                  </div>
+                </div>
+
+                <div class="poc-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Creación del punto de acceso falso</h3>
+                        <p>Configurar un punto de acceso que imite una red wifi legítima:</p>
+                        <ul>
+                            <li>Establecer un nombre de SSID común. En este caso, se usará "WiFi UNIR", simulando la red WiFi de la universidad.</li>
+                            <li>Configurar el canal de transmisión.</li>
+                            <li>Deshabilitar la autenticación para facilitar las conexiones.</li>
+                            <li>Activar el módulo de <em>Evil Portal</em>.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="poc-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Diseño del portal cautivo</h3>
+                        <p>Para crear el portal cautivo que simule el servicio legítimo, se toma como base el recopilatorio Foose Evil Portals.</p>
+                        <p>Una vez seleccionado el portal con estilo más parecido al servicio objetivo, se personaliza con logos y estilos para asemejarlo todo lo posible al legítimo. En este caso, como el portal es inventado, se define una estética similar a la identidad corporativa de la universidad.</p>
+						<p>La parte esencial del portal prácticamente no es necesario tocarla, salvo por personalizar textos. El código fuente clave del formulario es el siguiente:</p>
+
+                    <div class="code-block">
+                    <pre><code>
+&lt;form method="POST" action="/captiveportal/index.php" onsubmit="redirect()" class="form-signin"&gt;
+
+    &lt;input type="text" name="email" class="form-control" placeholder="Email" _autofocus="true" autocorrect="off" autocomplete="off" autocapitalize="off" required&gt;
+    &lt;input type="password" name="password" class="form-control" placeholder="Password" autocorrect="off" autocomplete="off" autocapitalize="off" required&gt;&lt;br&gt;
+
+    &lt;input type="hidden" name="hostname" value="&lt;?=getClientHostName($_SERVER['REMOTE_ADDR']);?&gt;"&gt;
+    &lt;input type="hidden" name="mac" value="&lt;?=getClientMac($_SERVER['REMOTE_ADDR']);?&gt;"&gt;
+    &lt;input type="hidden" name="ip" value="&lt;?=$_SERVER['REMOTE_ADDR'];?&gt;"&gt;
+    &lt;input type="hidden" name="target" value="&lt;?=$destination?&gt;"&gt;
+
+    &lt;button class="btn btn-primary btn-block btn-xlarge btn-sharp" name="login" type="submit"&gt;Aceptar y conectar&lt;/button&gt;
+
+    &lt;div class="text-center terms-text1"&gt;Estoy de acuerdo con los &lt;a href="#" class="url-color" id="btn1"&gt;términos del servicio&lt;/a&gt; y he consultado la &lt;a href="#" class="url-color"&gt;política de privacidad&lt;/a&gt;&lt;/div&gt;
+
+    &lt;div class="text-center terms-text3"&gt;Soporte técnico: &lt;a href="#" class="url-color"&gt;800 10 10 10&lt;/a&gt;&lt;/div&gt;
+
+&lt;/form&gt;
+                    </code></pre>
+                    </div>
+
+						<br/><p>En esta prueba de concepto, cuando la víctima introduce los valores y pulsa en el botón de enviar, el portal cautivo no le muestra ningún mensaje (ponga bien o mal los datos). Se podría personalizar el código fuente para que el comportamiento tras pulsar el botón sea redirigir a la página legítima del servicio y así no levantar sospechas.</p>
+					</div>
+                </div>
+
+                <div class="poc-step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Captura de credenciales</h3>
+                        <p>Cuando el usuario introduzca las credenciales en el portal cautivo y pulse sobre el botón de Enviar, se procesarán los datos y se trasladarán al <i>log</i> del portal, donde el atacante podrá consultar los datos introducidos.</p>
+                        <p>El código encargado de grabar las interacciones de las víctimas con el portal tendrá una apariencia similar a esta:</p>
+                        <div class="code-block">
+                            <pre><code>
+if (isset($_POST['email'])) {
+    $email = isset($_POST['email']) ? $_POST['email'] : &#039;email&#039;;
+    $pwd = isset($_POST['password']) ? $_POST['password'] : &#039;password&#039;;
+    $hostname = isset($_POST['hostname']) ? $_POST['hostname'] : &#039;hostname&#039;;
+    $mac = isset($_POST['mac']) ? $_POST['mac'] : &#039;mac&#039;;
+    $ip = isset($_POST['ip']) ? $_POST['ip'] : &#039;ip&#039;;
+
+    $reflector = new \ReflectionClass(get_class($this));
+    $logPath = dirname($reflector->getFileName());
+    file_put_contents(
+        &quot;{$logPath}/.logs&quot;,
+        &quot;[&quot; . date(&#039;Y-m-d H:i:s&#039;) . &quot;Z]\n&quot; .
+        &quot;email: {$email}\npassword: {$pwd}\nhostname: {$hostname}\nmac: {$mac}\nip: {$ip}\n\n&quot;,
+        FILE_APPEND
+    );
+    $this-&gt;execBackground(&quot;notify $email&#039; - &#039;$pwd&quot;);
+}
+                            </code></pre>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Variaciones -->
+        <section id="variaciones" class="content-section">
+            <div class="container">
+                <h2>Variaciones del ataque</h2>
+
+                <!-- 1. Ataque con deautenticación -->
+                <div class="variation-card">
+                    <h3>1. Ataque con deautenticación</h3>
+                    <p>
+						Esta variación combina el ataque <i>Evil Twin</i> con el envío de tramas de deautenticación 
+                        (deauth) del estándar IEEE 802.11. El objetivo es forzar a los dispositivos a 
+                        desconectarse de su punto de acceso legítimo para que, en la reconexión, terminen 
+                        enlazando con el punto de acceso falso ofrecido por el atacante (WiFi Pineapple).
+                    </p>
+                    <ul>
+                        <li><strong>Flujo del ataque:</strong> el atacante identifica el BSSID del punto de acceso real y los clientes conectados, y empieza a enviar tramas de deautenticación falsificadas dirigidas al cliente y/o al AP.</li>
+                        <li>Al recibir múltiples tramas de deautenticación, el dispositivo interpreta que ha perdido la conexión y comienza a buscar redes disponibles.</li>
+                        <li>En ese momento, el Pineapple ofrece un AP con el mismo SSID que la red original, normalmente con mayor potencia o en un canal menos saturado.</li>
+                        <li>El dispositivo se reconecta automáticamente al AP malicioso, ya que lo percibe como la misma red conocida.</li>
+                    </ul>
+                    <p>
+                        <strong>Qué ve el usuario:</strong> en muchos casos, el usuario solo percibe una breve pérdida de conexión WiFi o ningún síntoma visible; la reconexión suele ser transparente.
+                    </p>
+                    <p>
+                        <strong>Qué ve el atacante:</strong> en la interfaz del Pineapple aparecen nuevos clientes asociados al AP falso, solicitudes DHCP de nuevos leases y tráfico HTTP/S atravesando el dispositivo.
+                    </p>
+                    <p>
+                        <strong>Limitaciones:</strong> en entornos con protección 802.11w (PMF) o sistemas WIDS/WIPS, las tramas de deauth falsas pueden detectarse o bloquearse. Además, algunos dispositivos pueden priorizar la red real si sigue siendo visible y estable.
+                    </p>
+                </div>
+
+                <!-- 2. Karma Attack -->
+                <div class="variation-card">
+                    <h3>2. <i>Karma Attack</i></h3>
+                    <p>
+                        El ataque Karma aprovecha el comportamiento de muchos dispositivos WiFi, que envían 
+                        periódicamente <em>probe requests</em> preguntando por redes a las que se conectaron en 
+                        el pasado. WiFi Pineapple, mediante módulos como PineAP o integraciones con 
+                        herramientas tipo <em>hostapd-mana</em>, responde afirmando ser esas redes conocidas.
+                    </p>
+                    <ul>
+                        <li><strong>Flujo del ataque:</strong> el dispositivo de la víctima envía peticiones del tipo “¿Está por aquí la red &quot;Casa_Juan&quot;? &quot;Oficina&quot;? &quot;Mi_iPhone&quot;?”</li>
+                        <li>El Pineapple escucha esos probe requests y, en lugar de ignorarlos, responde como si fuese cada una de esas redes.</li>
+                        <li>Automáticamente crea puntos de acceso con los SSID solicitados, sin que el usuario intervenga.</li>
+                        <li>El dispositivo se conecta porque tiene guardadas esas redes como “conocidas” y no distingue que el AP es falso.</li>
+                    </ul>
+                    <p>
+                        <strong>Qué ve el usuario:</strong> la típica lista de redes conocidas, y el dispositivo conectándose “solo” a su WiFi habitual. No se muestra ninguna alerta visible.
+                    </p>
+                    <p>
+                        <strong>Qué ve el atacante:</strong> en los registros de PineAP se observan los probe requests, la creación dinámica de SSIDs y las nuevas asociaciones de clientes. En herramientas como Wifiphisher o Fluxion se ve un flujo similar.
+                    </p>
+                    <p>
+                        <strong>Limitaciones:</strong> las versiones más recientes de Android e iOS han reducido el envío de probes con SSID en claro, pero muchos portátiles, dispositivos IoT y sistemas antiguos siguen comportándose de esta forma, siendo vulnerables al ataque Karma.
+                    </p>
+                </div>
+
+                <!-- 3. Portal cautivo con Captcha y MFA simulado -->
+                <div class="variation-card">
+					<h3>3. Portal cautivo con <i>Captcha</i> y verificación avanzada</h3>
+                    <p>
+                        En lugar de un simple formulario de usuario y contraseña, el portal cautivo puede 
+                        incorporar mecanismos que el usuario asocia mentalmente con seguridad: captchas 
+                        similares a los de Google, mensajes de verificación en dos pasos o pantallas que 
+                        simulan comprobaciones de seguridad.
+                    </p>
+                    <ul>
+                        <li><strong>Flujo del ataque:</strong> tras conectarse al AP falso, el usuario es redirigido automáticamente al portal cautivo “obligatorio” para obtener acceso a Internet.</li>
+                        <li>La página incluye un captcha visual y mensajes del tipo “Introduzca sus credenciales para continuar” o “Su sesión ha caducado por seguridad”.</li>
+                        <li>Una vez introducidos los datos, la página muestra mensajes falsos de verificación (“Comprobando sus datos…”) para dar más credibilidad.</li>
+                        <li>Finalmente, el usuario es redirigido a la página real (por ejemplo, la portada de Google o del servicio corporativo) para que no sospeche.</li>
+                    </ul>
+                    <p>
+                        <strong>Qué ve el usuario:</strong> un flujo que recuerda a muchos portales de hotel, aeropuerto o empresa, con un captcha y apariencia de “control de seguridad obligatorio”.
+                    </p>
+                    <p>
+                        <strong>Qué ve el atacante:</strong> en el backend del portal (en este caso, alojado en el Pineapple) se registran usuario, contraseña, dirección IP, agente de navegador y marca temporal en un fichero de credenciales o base de datos.
+                    </p>
+                    <p>
+                        <strong>Ventajas e impacto:</strong> este tipo de portal reduce la sospecha, ya que el usuario no ve algo “demasiado simple”, sino un proceso que se percibe como más serio y habitual en servicios que aplican mayor protección.
+                    </p>
+                </div>
+
+                <!-- 4. Ataque dirigido a empresas -->
+                <div class="variation-card">
+                    <h3>4. Ataque dirigido a empresas</h3>
+                    <p>
+                        En un escenario corporativo, el atacante no se conforma con un portal genérico, sino que 
+                        prepara un ataque muy específico contra una organización concreta. El objetivo es obtener 
+                        credenciales de dominio, VPN, correo corporativo o aplicaciones internas.
+                    </p>
+                    <ul>
+                        <li><strong>Fase de reconocimiento:</strong> mediante OSINT, se identifican los nombres de SSID corporativos, el tipo de portal de acceso remoto (VPN SSL, SSO, OWA, Microsoft 365, etc.) y el diseño habitual de las pantallas de login.</li>
+                        <li><strong>Clonado del entorno:</strong> se replica no sólo el logo, sino también la estructura, colores, mensajes de error, pie de página legal y textos habituales de la organización.</li>
+                        <li><strong>Escenario de ataque:</strong> el Pineapple se despliega cerca de las oficinas, se replica el SSID corporativo y se levantan portales falsos que imitan la VPN o el SSO interno.</li>
+                        <li><strong>Captura y uso de credenciales:</strong> en un entorno de prueba autorizado, las credenciales capturadas se utilizan para demostrar el impacto potencial (acceso a correo, intranet, etc.) sin llegar a un uso malicioso real.</li>
+                    </ul>
+                    <p>
+                        <strong>Qué ve el usuario:</strong> una supuesta “reautenticación” corporativa que encaja con lo que ve a diario: mismo logo, mismo tipo de campos, mensajes legales parecidos, etc.
+                    </p>
+                    <p>
+                        <strong>Qué ve el atacante:</strong> un conjunto de credenciales muchas veces ligado a cuentas de dominio o servicios críticos, lo que podría permitir una escalada de privilegios importante si no se aplican medidas adicionales como MFA real.
+                    </p>
+                    <p>
+                        <strong>Relación con casos reales:</strong> muchos informes de pentesting y estudios académicos recogen ataques de este tipo en entornos empresariales, combinando Pineapple o frameworks como Wifiphisher con ingeniería social y clonado de portales internos.
+                    </p>
+                </div>
+
+                <!-- 5. Combinación con SSL Strip -->
+                <div class="variation-card">
+					<h3>5. Combinación con <i>SSL Strip</i></h3>
+                    <p>
+                        <i>SSL Strip</i> es una técnica que intenta degradar una conexión HTTPS a HTTP cuando el 
+                        usuario todavía no ha establecido una sesión cifrada. Aunque navegadores modernos y 
+                        mecanismos como HSTS han mitigado buena parte de este ataque, sigue siendo relevante en 
+                        contextos donde se accede a servicios sin protección estricta.
+                    </p>
+                    <ul>
+                        <li><strong>Flujo del ataque:</strong> el Pineapple actúa como punto intermedio; cuando el usuario solicita una URL, el tráfico pasa por un proxy que analiza las peticiones.</li>
+                        <li>Si la aplicación web no fuerza siempre HTTPS o no está en listas HSTS, es posible devolver una versión HTTP de la página.</li>
+                        <li>El usuario, si no presta atención al candado del navegador, introduce credenciales en un formulario sin cifrado extremo a extremo.</li>
+                        <li>El atacante ve el tráfico en texto claro y puede registrar usuario y contraseña antes de reenviar la petición al sitio original y no levantar sospechas.</li>
+                    </ul>
+                    <p>
+                        <strong>Limitaciones actuales:</strong> muchos servicios críticos ya aplican HSTS y redirecciones obligatorias a HTTPS, por lo que el impacto práctico se centra en sitios menos protegidos o en servicios internos mal configurados.
+                    </p>
+                </div>
+
+                <!-- 6. Inyección de JavaScript -->
+                <div class="variation-card">
+                    <h3>6. Inyección de JavaScript</h3>
+                    <p>
+                        Aprovechando que todo el tráfico HTTP pasa por el Pineapple, el atacante puede modificar 
+                        sobre la marcha el código HTML de las páginas y añadir scripts propios. Esto permite desde 
+                        registrar pulsaciones de teclado hasta manipular formularios o insertar contenido adicional.
+                    </p>
+                    <ul>
+                        <li><strong>Keylogging en formularios:</strong> se inyecta un pequeño script que captura lo que el usuario escribe en determinados campos y lo envía al servidor del atacante.</li>
+                        <li><strong>Manipulación de campos ocultos:</strong> se pueden cambiar destinos de envío o añadir campos no visibles que capturen información adicional.</li>
+                        <li><strong>Redirecciones encubiertas:</strong> tras el envío de un formulario, se puede redirigir a una página falsa antes de devolver al usuario al sitio legítimo.</li>
+                        <li><strong>Captura de cookies no cifradas:</strong> en sitios sin HTTPS estricto, es posible leer cookies de sesión y otros tokens.</li>
+                    </ul>
+                    <p>
+                        <strong>Limitaciones:</strong> en sitios con HTTPS correcto y políticas de seguridad como CSP, HSTS y cookies seguras, la inyección directa de JavaScript se reduce de forma considerable.
+                    </p>
+                </div>
+
+                <!-- 7. Rogue DHCP y manipulación de tráfico -->
+                <div class="variation-card">
+					<h3>7. <i>Rogue DHCP</i> y manipulación de tráfico</h3>
+                    <p>
+                        Además de hacerse pasar por un punto de acceso WiFi, el atacante puede usar el Pineapple 
+                        como servidor DHCP malicioso (rogue DHCP). De esta forma, controla qué puerta de enlace 
+                        y qué servidores DNS se anuncian a los clientes conectados.
+                    </p>
+                    <ul>
+                        <li><strong>Flujo del ataque:</strong> cuando el cliente se conecta al AP falso, pide una dirección IP. El Pineapple responde con una configuración en la que la puerta de enlace y el DNS apuntan al propio dispositivo del atacante.</li>
+                        <li>Todo el tráfico de red del cliente pasa entonces a través de esa puerta de enlace.</li>
+                        <li>Al controlar el DNS, el atacante puede redirigir dominios concretos a servidores clonados (ataques de pharming).</li>
+                        <li>Se pueden secuestrar solicitudes de actualización o tráfico interno mal protegido.</li>
+                    </ul>
+                    <p>
+                        <strong>Qué ve el usuario:</strong> únicamente que “tiene Internet”. No hay diferencias visuales aparentes respecto a una red legítima, salvo que podría notar redirecciones extrañas si el ataque no está bien afinado.</p>
+                    <p>
+                        <strong>Qué ve el atacante:</strong> registros DHCP de dispositivos conectados, peticiones DNS, conexiones HTTP y, según el escenario, cierta visibilidad de tráfico hacia servicios externos.</p>
+                </div>
+
+                <!-- 8. Evil Twin persistente con reconexión forzada -->
+                <div class="variation-card">
+					<h3>8. <i>Evil Twin</i> persistente con reconexión forzada</h3>
+                    <p>
+                        En lugar de un ataque puntual, algunos escenarios plantean un <i>Evil Twin</i> mantenido en el 
+                        tiempo, con reconexiones forzadas periódicas. El objetivo es capturar credenciales o 
+                        sesiones a lo largo de horas o días, especialmente en contextos donde el usuario trabaja 
+                        durante mucho tiempo en la misma ubicación (oficina, campus, coworking).
+                    </p>
+                    <ul>
+                        <li><strong>Flujo del ataque:</strong> el AP falso permanece activo de manera prolongada, anunciando el mismo SSID que la red legítima.</li>
+                        <li>Periódicamente, se envían tramas de deautenticación para forzar a los clientes a “refrescar” su conexión.</li>
+                        <li>El AP malicioso ajusta la potencia de señal para aparecer como opción más atractiva en la lista de redes.</li>
+                        <li>Con el paso del tiempo, aumentan las probabilidades de que el usuario introduzca credenciales en portales o servicios sensibles.</li>
+                    </ul>
+                    <p>
+                        <strong>Relación con casos reales:</strong> en auditorías internas se ha utilizado este enfoque para simular a un atacante que deja un dispositivo oculto en una sala de reuniones o zona común, operando de forma continua mientras los usuarios trabajan con normalidad.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Protección (componente de pestañas) -->
+        <section id="proteccion" class="content-section alt-bg">
+            <div class="container">
+                <h2>Cómo protegerse</h2>
+
+                <div class="protection-tabs" role="region" aria-label="Cómo protegerse - Pestañas">
+                    <!-- Columna izquierda: pestañas -->
+                    <aside class="tabs-left" aria-hidden="false">
+                        <ul role="tablist" aria-orientation="vertical">
+                            <li>
+                                <button class="tab-button" role="tab" aria-selected="true" data-target="tab-vpn" id="tab-vpn-btn">
+                                    <span class="tab-icon">🔐</span>
+                                    <span>Usar VPN</span>
+                                </button>
+                            </li>
+                            <li>
+                                <button class="tab-button" role="tab" aria-selected="false" data-target="tab-https" id="tab-https-btn">
+                                    <span class="tab-icon">🔒</span>
+                                    <span>Verificar la conexión HTTPS</span>
+                                </button>
+                            </li>
+                            <li>
+                                <button class="tab-button" role="tab" aria-selected="false" data-target="tab-auto-wifi" id="tab-auto-wifi-btn">
+                                    <span class="tab-icon">📱</span>
+                                    <span>Desactivar WiFi automático</span>
+                                </button>
+                            </li>
+                            <li>
+                                <button class="tab-button" role="tab" aria-selected="false" data-target="tab-2fa" id="tab-2fa-btn">
+                                    <span class="tab-icon">🔑</span>
+                                    <span>Autenticación de doble factor</span>
+                                </button>
+                            </li>
+                            <li>
+                                <button class="tab-button" role="tab" aria-selected="false" data-target="tab-distrust" id="tab-distrust-btn">
+                                    <span class="tab-icon">⚠️</span>
+                                    <span>Desconfiar de redes públicas</span>
+                                </button>
+                            </li>
+                            <li>
+                                <button class="tab-button" role="tab" aria-selected="false" data-target="tab-remove" id="tab-remove-btn">
+                                    <span class="tab-icon">🗑️</span>
+                                    <span>Eliminar redes guardadas</span>
+                                </button>
+                            </li>
+                            <li>
+                                <button class="tab-button" role="tab" aria-selected="false" data-target="tab-update" id="tab-update-btn">
+                                    <span class="tab-icon">🔄</span>
+                                    <span>Mantener el software actualizado</span>
+                                </button>
+                            </li>
+                            <li>
+                                <button class="tab-button" role="tab" aria-selected="false" data-target="tab-passwords" id="tab-passwords-btn">
+                                    <span class="tab-icon">🛡️</span>
+                                    <span>Usar gestores de contraseñas</span>
+                                </button>
+                            </li>
+                        </ul>
+                    </aside>
+
+                    <!-- Columna derecha: panel de contenido -->
+                    <div class="tabs-right">
+                        <div id="tab-vpn" class="tab-panel active" role="tabpanel" aria-labelledby="tab-vpn-btn">
+                            <div>
+                                <h3>Usar VPN</h3>
+                                <p>
+                                    Utilizar una VPN (Red Privada Virtual) permite cifrar todo el tráfico de red de extremo a extremo, impidiendo que un atacante pueda leer la información interceptada.
+                                </p>
+                            </div>
+                            <div>
+                                <h3>Amenaza sin VPN</h3>
+                                <ul>
+                                    <li><strong>Interceptar (Sniffing) tu tráfico:</strong> Leen todo lo que envías y recibes si no está protegido por HTTPS (nombres de usuario, contraseñas, mensajes privados, etc.).</li>
+                                    <li><strong>Realizar ataques Man-in-the-Middle (MitM):</strong> Modifican los datos en tránsito o redirigirte a páginas web fraudulentas (phishing) para robar tu información.</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h3>La solución con VPN</h3>
+                                <ul>
+                                   <li>
+                                       <strong>Estableces un túnel cifrado:</strong> Tu dispositivo crea una conexión segura y cifrada directamente con un servidor remoto de la VPN a través de ese túnel.
+                                    </li>
+                                    <li>
+                                        <strong>El atacante solo se datos ilegibles:</strong> Todo lo que viaja por la red local (la controlada por la Pineapple) está cifrado. El atacante solo ve una corriente de datos codificados y sin sentido.
+                                    </li>
+                                    <li>
+                                        <strong>La interceptación es inútil:</strong> Aunque el atacante intercepte los paquetes de datos, no puede descifrarlos ni leer su contenido, ya que la clave de cifrado solo la tienen tu dispositivo y el servidor VPN.
+                                    </li>
+                                    <li>
+                                        <strong>Tu actividad permanece privada:</strong> El atacante no puede ver a qué sitios web te conectas, qué credenciales introduces ni qué haces en línea.
+                                    </li>     
+                                </ul>
+                            </div>
+                        </div>
+                        <div id="tab-https" class="tab-panel" role="tabpanel" aria-labelledby="tab-https-btn">
+                            <h3>Utilizar HTTPS</h3>
+                            <p>
+                                El HTTPS garantiza que la conexión entre tu navegador web y el sitio web que visita esté cifrada. Esto significa que cualquier dato transmitido (contraseñas, datos bancarios, mensajes personales) es ilegible para terceros que puedan estar espiando la red.
+                            </p>
+                            <p>Para asegurar el uso de HTTPS, puedes seguir las siguientes recomendaciones:</p> 
+                            <ul>
+                                <li>
+                                    <strong>Activar el "Modo solo HTTPS" en su navegador:</strong> Los navegadores modernos ofrecen una configuración para forzar el uso de HTTPS siempre que el sitio web lo admita.
+                                </li>
+                                <li>
+                                    <strong>Identificar que se está usando HTTPS:</strong> Identificando el candado en la barra de navegador o con las URLs que comienzan por <strong>"https://"</strong>. Si ves una advertencia de <strong>"No es seguro" o un candado tachado</strong>, significa que el sitio no está usando cifrado, y debes evitar ingresar información sensible en él.
+                                </li>
+                                <li>
+                                    <strong>Lista de precarga HSTS:</strong> Muchos sitios web importantes (bancos, redes sociales, servicios de correo electrónico) utilizan una medida de seguridad avanzada llamada <strong>HSTS (HTTP Strict Transport Security)</strong>. Los navegadores modernos vienen con una lista precargada de estos dominios y cuando intenta acceder a un sitio en esa lista, el navegador sabe de antemano que solo debe conectarse a través de HTTPS, incluso si hace clic en un enlace HTTP por error.
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div id="tab-auto-wifi" class="tab-panel" role="tabpanel" aria-labelledby="tab-auto-wifi-btn">
+                            <h3>Desactivar WiFi automático</h3>
+                             <p>Configura tus dispositivos (móviles, portátiles) para que no se conecten automáticamente a redes Wi-Fi desconocidas o redes con nombres (SSID) que hayas usado antes. Esto mitiga los ataques de "Gemelo Maligno" (Evil Twin).</p>
+                            <p><strong>¿Por qué es fundamental desactivar la conexión automática?</strong><br>
+                                El wifi maligno (Evil twin) explota una característica de conveniencia de nuestros dispositivos: la tendencia a buscar y reconectar automáticamente a redes conocidas de la siguiente manera:
+                            </p>
+                            <ol>
+                                <li><strong>Imitación de redes (Spoofing):</strong> El dispositivo del atacante se hace pasar por una red WiFi legítima o conocida (Mc Donal´s, Starbucks, Aeropueto...).
+                                </li>
+                                <li><strong>Conexión automática no autorizada:</strong> Si tu teléfono o portátil tiene activada la conexión automática, se conectará instantánea y silenciosamente a esta red falsa, creyendo que es segura.
+                                </li>
+                                <li><strong>Ataque "Man-in-the-Middle":</strong>  Una vez conectado, todo tu tráfico de Internet pasa por el dispositivo del atacante, quien puede inspeccionar, interceptar o manipular sus datos (a menos que use una VPN o HTTPS, como ya hemos visto anteriormente).
+                                </li>
+                            </ol>
+                            <p> Al desactivar esta función, el propio usuario toma el control manual de a qué red se conecta, asegurando que solo se una a redes en las que confía explícitamente y de las que ha verificado su autenticidad.</p>
+                        </div>
+
+                        <div id="tab-2fa" class="tab-panel" role="tabpanel" aria-labelledby="tab-2fa-btn">
+                            <h3>Autenticación doble factor</h3>
+                            <p>El doble factor de autenticación (2FA), o verificación en dos pasos, es una capa de seguridad esencial que complementa las medidas anteriores y ayuda significativamente a mitigar las consecuencias de robo de credenciales tras un ataque de "Man in the middle" (MitM). <br>
+                                Aunque la 2FA no evita que el atacante intercepte el tráfico inicial, sí impide que el atacante acceda a las cuentas en línea (correo electrónico, banca, redes sociales) incluso si ha logrado robar su nombre de usuario y contraseña a través del punto de acceso falso.</p>
+                            <p><strong>Activar 2FA en todas las cuentas.</strong> Incluso si capturan las credenciales, necesitarán el segundo factor para acceder a la cuenta, lo que reduce considerablemente el riesgo.<br> 
+                            El doble factor requiere de un dispositivo físico al que llega un <strong>código de verificación (SMS o App de autenticación)</strong> y al que, lógicamente, el atacante remoto no tiene acceso. Adicionalmente, nos proporciona una <strong>alerta inmediata</strong> de que alguien quiere realizar inicio de sesión con nuestras credenciales, por lo que sabemos que hay que cambiarlas.</p>
+                        </div>
+
+                        <div id="tab-distrust" class="tab-panel" role="tabpanel" aria-labelledby="tab-distrust-btn">
+                            <h3>Desconfiar de redes públicas</h3>
+                            <p>Hay que desconfiar de las redes WiFi públicas porque, a diferencia de las redes privadas, carecen de seguridad y supervisión, convirtiéndose en el entorno ideal para los ciberdelincuentes</p>
+                            <p>En caso de tener que usar una red pública, evitar introducir credenciales sensibles y, caso de tener que realizar operaciones críticas, usar datos móviles o una conexión segura de confianza y/o que controlemos nosotros.</p>
+                            <p><strong>¿Por qué es peligrosa una red pública?</strong> Muchas redes WiFi públicas (gratuitas, sin contraseña) no cifran el tráfico entre nuestro dispositivo y el punto de acceso (AP). Esto significa que la información viaja "en texto plano" y cualquier persona en la misma red, usando herramientas de intercepción, puede leerla fácilmente.</p>
+                        </div>
+
+                        <div id="tab-remove" class="tab-panel" role="tabpanel" aria-labelledby="tab-remove-btn">
+                            <h3>Eliminar redes guardadas</h3>
+                            <p>Eliminar las redes WiFi guardadas (o "conocidas") en tus dispositivos es una medida de seguridad importante porque reduce drásticamente las oportunidades que tiene un atacante de engañar al dispositivo para que se conecte a un punto de acceso malicioso</p>
+                            <p><strong>¿Por qué?</strong></p>
+                            <ol>
+                                <li><strong>Previene el engaño automático (ataque karma/evil twin):</strong> El dispositivo móvil u ordenador funciona por comodidad. Es decir, recuerda las redes a las que se ha conectado anteriormente (como la WiFi de su gimnasio, aeropuerto o establecimiento) y almacena sus nombres o SSID. <strong>Al eliminar esas redes guardadas, el dispositivo deja de buscarlas activamente evitando que caigamos en la trampa.</strong>
+								</li>
+                                <li><strong>Elimina la superficie de ataque:</strong> Cuantas menos redes "conozca" el dispositivo, menor será la "superficie de ataque" (reducimos probabilidad) que puede explotar un atacante.
+                                </li>
+                                <li><strong>Recupera el control manual de la conexión:</strong> Al no tener redes guardadas que se conecten automáticamente, tenemos que seleccionar manualmente la red cada vez que quiere conectarse en un lugar público.
+                                </li>
+                            </ol>
+							<p>La recomendación general es mantener la lista de redes guardadas lo más limpia posible, conservando solo aquellas en las que confía plenamente (casa, oficina).<br>
+								Revisar periódicamente la lista de redes conocidas en la configuración de Wi-Fi del teléfono/ordenador y eliminar cualquier red pública, antigua o desconocida que ya no necesitemos. Esto, combinado con la desactivación de la conexión automática y el uso de una VPN, crea una defensa robusta contra los ataques.
+							</p>
+                        </div>
+
+                        <div id="tab-update" class="tab-panel" role="tabpanel" aria-labelledby="tab-update-btn">
+                            <h3>Mantener software actualizado</h3>
+                            <p>Es crucial mantener el software actualizado para bloquear vulnerabilidades que los atacantes explotan, porque las actualizaciones incluyen parches de seguridad que cierran esas brechas, mejoran la protección contra malware, y aseguran la compatibilidad, evitando que hackers roben datos o comprometan tu red al explotar fallos conocidos en sistemas operativos, navegadores y routers.</p>
+                       	<p><strong>¿Por qué las actualizaciones son vitales contra ataques WiFi?</strong></p>
+							<ul>
+                                <li><strong>Parchean vulnerabilidades:</strong> Los ciberdelincuentes buscan fallos de seguridad (vulnerabilidades) en el software para infiltrarse. Las actualizaciones de software (sistema operativo, aplicaciones, firmware del router) corrigen estos agujeros antes de que sean explotados masivamente.
+								</li>
+                                <li><strong>Bloquean malware:</strong> Un dispositivo desactualizado puede ser el punto de entrada para virus, que luego pueden propagarse a otros dispositivos conectados a la misma red, incluyendo la red WiFi.
+                                </li>
+                                <li><strong>Fortalecen las defensas:</strong> Las actualizaciones no solo reparan errores, sino que también mejoran los mecanismos de defensa del software, fortaleciendo tu escudo contra nuevas amenazas.
+                                </li>
+                            </ul>
+						</div>
+						
+                        <div id="tab-passwords" class="tab-panel" role="tabpanel" aria-labelledby="tab-passwords-btn">
+                            <h3>Usar Gestores de contraseñas</h3>
+							<p>El uso de gestores de contraseñas es una de las defensas más eficaces contra los ataques realizados por este tipo de dispositivos, por ejemplo:</p>
+                            <ul>	
+								<li><strong>Detección automática de Phishing:</strong> Los gestores de contraseñas no autocompletarán credenciales en sitios de phishing que no coincidan exactamente con el dominio esperado (reconocen los sitios web legítimos), por lo que ayudan a detectar páginas falsas.
+								</li>
+								<li><strong>Mitigación del robo masivo de cuentas:</strong> Los gestores facilitan el uso de contraseñas complejas, largas y únicas para cada servicio. Esto garantiza que, incluso si un atacante lograra capturar una contraseña específica a través de la red falsa, no podrá utilizar esa misma clave para acceder a tus otras cuentas (bancos, correo, redes sociales), limitando drásticamente el impacto del ataque.
+								</li>
+								<li><strong>Seguridad de las credenciales almacenadas:</strong> A diferencia de guardar contraseñas en navegadores de forma poco segura o en notas. Los gestores utilizan una bóveda digital cifrada, lo que quiere decir que La información dentro del gestor permanece ilegible para cualquier persona que intente interceptar el tráfico ya que se requiere una contraseña maestra única para descifrarla.
+								</li>
+							</ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bibliografía -->
+        <section id="enlaces" class="content-section">
+            <div class="container">
+                <h2>Enlaces de interés</h2>
+
+                <div class="biblio-category">
+                    <h3>Recursos oficiales de WiFi Pineapple</h3>
+                    <ul class="biblio-list">
+                        <li>
+                            <a href="https://www.hak5.org/gear/wifi-pineapple" target="_blank">Hak5 - WiFi Pineapple</a>
+                            <p>Web oficial del dispositivo WiFi Pineapple</p>
+                        </li>
+                        <li>
+                            <a href="https://docs.hak5.org/wifi-pineapple/" target="_blank">Wiki de WiFi Pineapple</a>
+                            <p>Documentación oficial: guías de uso y configuración del dispositivo</p>
+                        </li>
+						<li>
+                            <a href="https://downloads.hak5.org/pineapple" target="_blank">Portal de descargas de Hak5</a>
+                            <p>Portal oficial de descargas de firmware de WiFi Pineapple</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="biblio-category">
+                    <h3>Artículos académicos</h3>
+                    <ul class="biblio-list">
+                        <li>
+                            <a href="https://www.sciencedirect.com/science/article/pii/S1877050915024254" target="_blank">Phishing attacks: A comprehensive study</a>
+                            <p>Estudio comprehensivo sobre técnicas de phishing</p>
+                        </li>
+                        <li>
+                            <a href="https://ieeexplore.ieee.org/abstract/document/8226838" target="_blank">Evil Twin Attack Detection in IEEE 802.11</a>
+                            <p>Análisis de detección de ataques Evil Twin</p>
+                        </li>
+						<li>
+                            <a href="https://www.ionos.com/es-us/digitalguide/servidores/seguridad/ataques-man-in-the-middle-un-vistazo-general/" target="_blank">Ataque man-in-the-middle (mitm attack)</a>
+                            <p>Análisis de detección de ataques MITM</p>
+                        </li>
+						<li>
+                            <a href="https://www.globalsign.com/es/blog/ataques-de-spoofing-explicados" target="_blank">Ataques de Spoofing explicados: tipos, riesgos y cómo detenerlos</a>
+                            <p>Comprensión y detección sobre ataques Spoofing</p>
+                        </li>
+						<li>
+                            <a href="https://www.ionos.com/es-us/digitalguide/servidores/know-how/que-es-una-vpn-virtual-private-network/" target="_blank">VPN: transmisión segura de datos en redes públicas</a>
+                            <p>Conociendo concepto de VPN</p>
+                        </li>
+						<li>
+                            <a href="https://www.ionos.com/es-us/digitalguide/correo-electronico/seguridad-correo-electronico/verificacion-en-dos-pasos-proteccion-para-tu-cuenta/" target="_blank">Protege tu información con la verificación en dos pasos</a>
+                            <p>Importancia del uso de doble factor, ventajas e inconvenientes</p>
+                        </li>
+						<li>
+                            <a href="https://www.ionos.com/es-us/digitalguide/paginas-web/desarrollo-web/hsts-como-lograr-conexiones-http-seguras/" target="_blank">HSTS: Así funciona la extensión HTTPS</a>
+                            <p>¿Qué es HSTS? Uso de extensiones HTTPS vs HTTP</p>
+                        </li>
+						<li>
+                            <a href="https://www.ionos.com/es-us/digitalguide/online-marketing/marketing-para-motores-de-busqueda/cambios-en-chrome-56-por-una-web-mas-segura/" target="_blank">El futuro Chrome identificará a las páginas sin certificado de seguridad</a>
+                            <p>Importancia de mantener dispositivos y parches de seguridad</p>
+                        </li>
+						<li>
+                            <a href="https://it.ucsf.edu/news-events/news/crucial-role-regular-software-updates-vulnerability-era" target="_blank">The Crucial Role of Regular Software Updates in the “Vulnerability Era”</a>
+                            <p>Noticia sobre la importancia de actualizaciones automáticas</p>
+						</li>
+                    </ul>
+                </div>
+
+                <div class="biblio-category">
+                    <h3>Herramientas de seguridad</h3>
+                    <ul class="biblio-list">
+                        <li>
+                            <a href="https://www.wireshark.org/" target="_blank">Wireshark</a>
+                            <p>Analizador de protocolos de red</p>
+                        </li>
+                        <li>
+                            <a href="https://www.aircrack-ng.org/" target="_blank">Aircrack-ng</a>
+                            <p>Suite de herramientas para auditoría WiFi</p>
+                        </li>
+                        <li>
+                            <a href="https://github.com/wifiphisher/wifiphisher" target="_blank">Wifiphisher</a>
+                            <p>Framework de ataque WiFi de código abierto</p>
+                        </li>
+                    </ul>
+                </div>                
+            </div>
+        </section>
+
+        <!-- Autores -->
+        <section id="autores" class="content-section alt-bg">
+            <div class="container">
+                <h2>Autores del proyecto</h2>
+                <p class="section-intro">Este proyecto ha sido desarrollado como parte de la asignatura de Seguridad de Sistemas de la Información.</p>
+
+                <div class="authors-grid">
+                    <div class="author-card">
+                        <div class="author-avatar">👩🏻‍💻</div>
+                        <h3>Silvia Rodríguez Fernández</h3>
+                        <p class="author-role">Investigación y documentación</p>
+                        <p class="author-bio">Encargado de la investigación de conceptos básicos y documentación del ataque.</p>
+                    </div>
+
+                    <div class="author-card">
+                        <div class="author-avatar">👨🏻‍🔬</div>
+                        <h3>José Carlos Gallego Cano</h3>
+                        <p class="author-role">Desarrollo de la Prueba de concepto</p>
+                        <p class="author-bio">Responsable de la implementación y pruebas del portal cautivo.</p>
+                    </div>
+
+                    <div class="author-card">
+                        <div class="author-avatar">👨🏻‍💻</div>
+                        <h3>Ignacio Delgado Torrejón</h3>
+                        <p class="author-role">Análisis de variaciones</p>
+                        <p class="author-bio">Investigación de diferentes variaciones y técnicas avanzadas del ataque.</p>
+                    </div>
+
+                    <div class="author-card">
+                        <div class="author-avatar">👨🏻‍💻</div>
+                        <h3>Juan Antonio Aguado Gallego</h3>
+                        <p class="author-role">Medidas de protección</p>
+                        <p class="author-bio">Documentación de medidas preventivas y buenas prácticas de seguridad.</p>
+                    </div>
+                </div>
+
+                <div class="project-info">
+                    <h3>Información del proyecto</h3>
+                    <ul>
+                        <li><strong>Asignatura:</strong> Seguridad de sistemas de la información</li>
+                        <li><strong>Universidad:</strong> UNIR - Universidad Internacional de La Rioja</li>
+                        <li><strong>Año académico:</strong> 2025-2026</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>CC BY-NC-SA 2025 - Proyecto educativo sobre seguridad WiFi</p>
+            <p>Este contenido es exclusivamente educativo y no debe utilizarse con fines maliciosos.</p>
+        </div>
+    </footer>
+
+	<!-- Modal de vídeo -->
+    <div class="video-modal" id="video-modal" aria-hidden="true">
+        <div class="video-modal__overlay" data-video-close></div>
+
+        <div class="video-modal__content" role="dialog" aria-modal="true" aria-label="Reproducción del vídeo de la prueba de concepto">
+            <button class="video-modal__close" type="button" aria-label="Cerrar vídeo" data-video-close>
+                &times;
+            </button>
+
+            <div class="video-modal__iframe-wrapper">
+                <iframe id="video-modal-iframe"
+                        src=""
+                        title="Vídeo de la prueba de concepto"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+    </div>
+	
+	<script src="js/main.js"></script>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
